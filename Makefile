@@ -1,12 +1,11 @@
 CXX = clang++
-
+LIBS = -lncurses
 
 CFLAGS = -g -O2 -std=c++17 -Wall
-SRCS = main.cc chip8em.cc
-OBJS = $(SRCS:.c=.o)
+SRCS = main.cc chip8em.cc chip8display.cc
+OBJS = $(SRCS:.cc=.o)
 
 TARGET = chip8em
-
 
 all: $(TARGET)
 
@@ -16,7 +15,10 @@ $(TARGET): $(OBJS)
 .cc.o:
 	$(CXX) $(CFLAGS) -c $< -o $@
 
-.PHONY: clean
+.PHONY: depend clean
 
 clean:
 	$(RM) *.o *~ $(TARGET)
+
+depend: $(SRCS)
+	makedepend $^
