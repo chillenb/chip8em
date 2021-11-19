@@ -63,7 +63,7 @@ void Chip8TerminalDisplay::c8d_initialize() {
     win = newwin(c8d_win_height, c8d_win_width*2, starty, startx);
 }
 
-int c8_key_from_keyboard(int c) {
+static int c8_key_from_keyboard(int c) {
     switch(c) {
         case '1':
           return 1;
@@ -104,6 +104,7 @@ int c8_key_from_keyboard(int c) {
 
 
 u8 Chip8TerminalDisplay::c8d_getchar() {
+    return 1;
     int c = c8_key_from_keyboard(getch());
     while(c == -1) {
         c = c8_key_from_keyboard(getch());

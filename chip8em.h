@@ -38,6 +38,7 @@ class Chip8 {
   std::mt19937 c8_rng;
   std::uniform_int_distribution<> c8_unif_dist{0, 0xFF};
 
+
   void ins0();
   void ins1();
   void ins2();
@@ -75,7 +76,7 @@ class Chip8 {
     &Chip8::insF  // F
   };
 
-  Chip8TerminalDisplay c8display;
+  Chip8SDL c8display;
 
 };
 

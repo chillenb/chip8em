@@ -1,8 +1,8 @@
 CXX = clang++
-LIBS = -lncurses
+LIBS = -lncurses -lSDL2
 
 CFLAGS = -g -O2 -std=c++20 -Wall
-SRCS = main.cc chip8em.cc chip8display.cc
+SRCS = main.cc chip8em.cc chip8sdl.cc
 OBJS = $(SRCS:.cc=.o)
 
 TARGET = chip8em

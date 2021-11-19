@@ -56,10 +56,16 @@ void Chip8::load_program(u8 *code, int length) {
 
 void Chip8::run() {
   using namespace std::chrono_literals;
-  while(1) {
+  int i = 0;
+  while(!c8display.quit) {
     cycle();
+    c8display.c8d_loop_tasks();
+    if(!i)
+      c8display.c8d_updateDisplay(gfx);
     std::this_thread::sleep_for(2ms);
+    i = (i + 1) % 8;
   }
+  c8display.c8d_cleanup();
 }
 
 
@@ -108,7 +114,7 @@ void Chip8::cycle() {
 void Chip8::clear_screen() {
   for(auto& line : gfx)
     line = 0ULL;
-  c8display.c8d_updateDisplay(gfx);
+  //c8display.c8d_updateDisplay(gfx);
   return;
 }
 
@@ -296,7 +302,7 @@ void Chip8::insD() {
       gfx[row_to_use][col_to_use] = existing != bpixels.test(7-col);
     }
   }
-  c8display.c8d_updateDisplay(gfx);
+  //c8display.c8d_updateDisplay(gfx);
   pc += 2;
 }
 
@@ -304,11 +310,11 @@ void Chip8::insE() {
   u8 regX = (opcode >> 8) & 0x0F;
   switch(opcode & 0xFF) {
     case 0x9E:
-      if(V[regX] == c8display.c8d_getchar())
+      if(c8display.c8d_check_if_key(V[regX]))
         pc += 2;
       break;
     case 0xA1:
-      if(V[regX] != c8display.c8d_getchar())
+      if(!c8display.c8d_check_if_key(V[regX]))
         pc += 2;
       break;
     default:
