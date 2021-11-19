@@ -1,28 +1,25 @@
 #ifndef CHIP8DISP_H
 #define CHIP8DISP_H
 
-#include <stdint.h>
 #include "chip8defines.h"
+#include <SDL2/SDL.h>
 #include <array>
 #include <bitset>
-#include <SDL2/SDL.h>
+#include <stdint.h>
 
-using std::bitset;
 using std::array;
+using std::bitset;
 
 class Chip8Display {
-    public:
+public:
+  bool isinitialized = false;
+  bool quit = false;
 
-    bool isinitialized = false;
-    bool quit = false;
-
-    virtual void c8d_initialize() = 0;
-    virtual void c8d_updateDisplay(bitset<64> gfx[]) = 0;
-    virtual void c8d_beep() = 0;
-    virtual u8 c8d_getchar() = 0;
-
+  virtual void c8d_initialize() = 0;
+  virtual void c8d_updateDisplay(bitset<64> gfx[]) = 0;
+  virtual void c8d_beep() = 0;
+  virtual u8 c8d_getchar() = 0;
 };
-
 
 static const int c8d_win_width = 64;
 static const int c8d_win_height = 32;
@@ -51,28 +48,27 @@ class Chip8TerminalDisplay : public Chip8Display {
 */
 
 class Chip8SDL : public Chip8Display {
-    public:
-    Chip8SDL();
-    ~Chip8SDL();
+public:
+  Chip8SDL();
+  ~Chip8SDL();
 
-    void c8d_initialize();
-    void c8d_updateDisplay(bitset<64> gfx[]);
-    void c8d_beep();
-    bool c8d_check_if_key(u8 key);
-    u8 c8d_getchar();
-    void c8d_cleanup();
+  void c8d_initialize();
+  void c8d_updateDisplay(bitset<64> gfx[]);
+  void c8d_beep();
+  bool c8d_check_if_key(u8 key);
+  u8 c8d_getchar();
+  void c8d_cleanup();
 
-    void c8d_loop_tasks();
+  void c8d_loop_tasks();
 
-    private:
+private:
+  float screen[64 * 32] = {0};
+  u8 screentimer[64 * 32] = {0};
 
-    float screen[64*32] = {0};
-    u8 screentimer[64*32] = {0};
-
-    SDL_Window* window = nullptr;
-    SDL_Renderer* renderer = nullptr;
-    SDL_Event e;
-    const u8* keystate;
+  SDL_Window *window = nullptr;
+  SDL_Renderer *renderer = nullptr;
+  SDL_Event e;
+  const u8 *keystate;
 };
 
 #endif

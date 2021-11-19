@@ -16,7 +16,6 @@ enum Chip8ErrorCode {
   C8_PROGRAM_TOO_LARGE = 5
 };
 
-
 extern u8 chip8_fontset[80];
 
 #endif
