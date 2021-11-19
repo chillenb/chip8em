@@ -21,13 +21,13 @@ public:
   virtual u8 c8d_getchar() = 0;
 };
 
-static const int c8d_win_width = 64;
-static const int c8d_win_height = 32;
-static const int pixsize = 10;
-static const int margin = 20;
+static constexpr int c8d_win_width = 64;
+static constexpr int c8d_win_height = 32;
+static constexpr int pixsize = 10;
+static constexpr int margin = 20;
 
-static const int sc_width = c8d_win_width * pixsize + 2 * margin;
-static const int sc_height = c8d_win_height * pixsize + 2 * margin;
+static constexpr int sc_width = c8d_win_width * pixsize + 2 * margin;
+static constexpr int sc_height = c8d_win_height * pixsize + 2 * margin;
 
 /*
 class Chip8TerminalDisplay : public Chip8Display {

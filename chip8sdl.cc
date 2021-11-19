@@ -80,7 +80,7 @@ void Chip8SDL::c8d_cleanup() {
   }
 }
 
-static const SDL_Scancode keys[16] = {
+static constexpr SDL_Scancode keys[16] = {
     SDL_SCANCODE_X, SDL_SCANCODE_1, SDL_SCANCODE_2, SDL_SCANCODE_3,
     SDL_SCANCODE_Q, SDL_SCANCODE_W, SDL_SCANCODE_E, SDL_SCANCODE_A,
     SDL_SCANCODE_S, SDL_SCANCODE_D, SDL_SCANCODE_Z, SDL_SCANCODE_C,
