@@ -1,12 +1,31 @@
 #include <iostream>
+#include <fstream>
+#include <vector>
+
 #include "chip8em.h"
 
-int main() {
+int main(int argc, char *argv[]) {
   Chip8 myc8;
-  myc8.c8_test_beep();
-  for(int i = 0; i < 32; i++) {
-  myc8.gfx[i] = (i&0x01) ? 0x5555555555555555 : 0xAAAAAAAAAAAAAAAA;
+  myc8.initialize();
+
+  if(argc != 2) {
+    exit(-1);
   }
-  myc8.c8terminaldisplay.c8_updateDisplay(myc8.gfx);
+  std::ifstream infile(argv[1], std::ios::binary | std::ios::ate);
+  if(infile.is_open()) {
+    auto filesize = infile.tellg();
+    if(filesize <= 4096 - 0x200) {
+      std::vector<u8> program(filesize);
+      infile.seekg(0);
+      if(infile.read(reinterpret_cast<char*>(&program[0]), filesize)) {
+        myc8.load_program(&program[0], int(filesize));
+        myc8.run();
+      }
+    }
+
+  }
+
+
+
   return 0;
 }
