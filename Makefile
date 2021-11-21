@@ -1,5 +1,5 @@
 CXX = clang++
-LIBS = -lncurses -lSDL2
+LIBS = -lSDL2
 
 CFLAGS = -g -O2 -std=c++20 -Wall
 SRCS = main.cc chip8em.cc chip8sdl.cc
