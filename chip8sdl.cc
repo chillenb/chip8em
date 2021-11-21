@@ -17,6 +17,12 @@ void Chip8SDL::c8d_loop_tasks() {
       quit = true;
   }
   keystate = reinterpret_cast<const u8 *>(SDL_GetKeyboardState(NULL));
+  bool is_escape = keystate[SDL_SCANCODE_ESCAPE];
+  bool is_ctrl_c =
+      (keystate[SDL_SCANCODE_RCTRL] || keystate[SDL_SCANCODE_LCTRL]) &&
+      keystate[SDL_SCANCODE_C];
+  if (is_escape || is_ctrl_c)
+    quit = true;
 }
 
 void Chip8SDL::c8d_updateDisplay(bitset<64> gfx[]) {
